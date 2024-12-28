@@ -1,0 +1,67 @@
+
+public class NumberProperties {
+    public static void main(String[] args) {
+        int[] numbers = { 11, 16, 153, 8, 21, 121, 4, 8, 5, 0 };
+        
+        for (int num : numbers) {
+            System.out.println("Number: " + num);
+            System.out.println("Prime: " + isPrime(num));
+            System.out.println("Perfect Square: " + isPerfectSquare(num));
+            System.out.println("Fibonacci: " + isFibonacci(num));
+            System.out.println("Armstrong: " + isArmstrong(num));
+            System.out.println("Palindrome: " + isPalindrome(num));
+            System.out.println();
+        }
+    }
+
+    // Prime number check using the square root method
+    public static boolean isPrime(int n) {
+        if (n <= 1) return false;
+        if (n == 2) return true; // 2 is prime
+        if (n % 2 == 0) return false; // Even numbers greater than 2 are not prime
+        for (int i = 3; i * i <= n; i += 2) {
+            if (n % i == 0) return false;
+        }
+        return true;
+    }
+
+    // Perfect Square check
+    public static boolean isPerfectSquare(int n) {
+        if (n < 0) return false;
+        int sqrt = (int) Math.sqrt(n);
+        return sqrt * sqrt == n; // Check if the square of sqrt equals the original number
+    }
+
+    // Fibonacci number check using the formula
+    public static boolean isFibonacci(int n) {
+        if (n < 0) return false;
+        return isPerfectSquare(5 * n * n + 4) || isPerfectSquare(5 * n * n - 4);
+    }
+
+    // Armstrong number check (Narcissistic number check)
+    public static boolean isArmstrong(int n) {
+        int temp = n, sum = 0, digits = 0;
+        while (temp > 0) {
+            temp /= 10;
+            digits++;
+        }
+        temp = n;
+        while (temp > 0) {
+            int digit = temp % 10;
+            sum += Math.pow(digit, digits);
+            temp /= 10;
+        }
+        return sum == n;
+    }
+
+    // Palindrome check
+    public static boolean isPalindrome(int n) {
+        if (n < 0) return false; // Negative numbers are not palindromes
+        int original = n, reversed = 0;
+        while (n > 0) {
+            reversed = reversed * 10 + n % 10;
+            n /= 10;
+        }
+        return original == reversed; // Compare the original number with the reversed number
+    }
+}
