@@ -1,0 +1,58 @@
+public class NumberProperties {
+    public static void main(String[] args) {
+        int[] numbers = { 11, 16, 153, 8, 21, 121, 4, 8, 5, 0 };
+        
+        for (int num : numbers) {
+            System.out.println("Number: " + num);
+            System.out.println("Prime: " + isPrime(num));
+            System.out.println("Perfect Square: " + isPerfectSquare(num));
+            System.out.println("Fibonacci: " + isFibonacci(num));
+            System.out.println("Armstrong: " + isArmstrong(num, num, 0));
+            System.out.println("Palindrome: " + isPalindrome(num, 0));
+            System.out.println();
+        }
+    }
+
+    // Prime number check using bit manipulation
+    public static boolean isPrime(int n) {
+        if (n <= 1) return false;
+        if (n == 2) return true;  // 2 is prime
+        if ((n & 1) == 0) return false;  // even numbers are not prime
+        for (int i = 3; i * i <= n; i += 2) {  // check odd numbers only
+            if ((n % i) == 0) return false;
+        }
+        return true;
+    }
+
+    // Perfect Square check using bit manipulation
+    public static boolean isPerfectSquare(int n) {
+        if (n < 0) return false;  // Negative numbers can't be perfect squares
+        int x = n;
+        while ((x * x) > n) {
+            x = (x + n / x) / 2;  // Newton's method for approximation
+        }
+        return (x * x == n);
+    }
+
+    // Fibonacci number check using bit manipulation
+    public static boolean isFibonacci(int n) {
+        if (n < 0) return false;
+        // A number is a Fibonacci number if and only if one or both of (5*n^2 + 4) or (5*n^2 - 4) is a perfect square
+        return isPerfectSquare(5 * n * n + 4) || isPerfectSquare(5 * n * n - 4);
+    }
+
+    // Armstrong number check using bit manipulation and recursion
+    public static boolean isArmstrong(int n, int original, int sum) {
+        if (n == 0) return sum == original;
+        int digit = n & 15;  // Get the last 4 bits (the last digit in base 10)
+        sum += Math.pow(digit, String.valueOf(original).length());
+        return isArmstrong(n >> 4, original, sum);  // Right shift by 4 (since we're working with base 10 digits)
+    }
+
+    // Palindrome check using bit manipulation
+    public static boolean isPalindrome(int n, int reversed) {
+        if (n == 0) return n == reversed;
+        reversed = (reversed << 1) | (n & 1);  // Shift left and add the last bit of n
+        return isPalindrome(n >> 1, reversed);  // Right shift n by 1
+    }
+}
