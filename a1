@@ -1,0 +1,210 @@
+public class NumberProperties {
+
+    public static void main(String[] args) {
+        int[] numbers = {2, 3, 4, 5, 6, 10, 11, 121, 153, 28, 496, 1001, 12321};
+
+        System.out.println("Prime Numbers:");
+        for (int num : numbers) {
+            if (isPrime(num)) {
+                System.out.println(num);
+            }
+        }
+
+        System.out.println("\nEven Numbers:");
+        for (int num : numbers) {
+            if (isEven(num)) {
+                System.out.println(num);
+            }
+        }
+
+        System.out.println("\nOdd Numbers:");
+        for (int num : numbers) {
+            if (isOdd(num)) {
+                System.out.println(num);
+            }
+        }
+
+        System.out.println("\nPalindrome Numbers:");
+        for (int num : numbers) {
+            if (isPalindrome(num)) {
+                System.out.println(num);
+            }
+        }
+
+        System.out.println("\nPerfect Numbers:");
+        for (int num : numbers) {
+            if (isPerfect(num)) {
+                System.out.println(num);
+            }
+        }
+
+        System.out.println("\nArmstrong Numbers:");
+        for (int num : numbers) {
+            if (isArmstrong(num)) {
+                System.out.println(num);
+            }
+        }
+
+        System.out.println("\nFibonacci Numbers:");
+        for (int num : numbers) {
+            if (isFibonacci(num)) {
+                System.out.println(num);
+            }
+        }
+    }
+
+    // Check if a number is prime
+    public static boolean isPrime(int num) {
+        if (num <= 1) return false;
+        for (int i = 2; i <= Math.sqrt(num); i++) {
+            if (num % i == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // Check if a number is even
+    public static boolean isEven(int num) {
+        return num % 2 == 0;
+    }
+
+    // Check if a number is odd
+    public static boolean isOdd(int num) {
+        return num % 2 != 0;
+    }
+
+    // Check if a number is a palindrome
+    public static boolean isPalindrome(int num) {
+        int originalNum = num;
+        int reversedNum = 0;
+        while (num != 0) {
+            reversedNum = reversedNum * 10 + num % 10;
+            num /= 10;
+        }
+        return originalNum == reversedNum;
+    }
+
+    // Check if a number is perfect
+    public static boolean isPerfect(int num) {
+        if (num <= 1) return false;
+        int sum = 0;
+        for (int i = 1; i <= num / 2; i++) {
+            if (num % i == 0) {
+                sum += i;
+            }
+        }
+        return sum == num;
+    }
+
+    // Check if a number is an Armstrong number (Narcissistic number)
+    public static boolean isArmstrong(int num) {
+        int originalNum = num;
+        int sum = 0;
+        int digits = (int) Math.log10(num) + 1;
+        while (num != 0) {
+            int digit = num % 10;
+            sum += Math.pow(digit, digits);
+            num /= 10;
+        }
+        return sum == originalNum;
+    }
+
+    // Check if a number is a Fibonacci number
+    public static boolean isFibonacci(int num) {
+        return isPerfectSquare(5 * num * num + 4) || isPerfectSquare(5 * num * num - 4);
+    }
+
+    // Helper function to check if a number is a perfect square
+    public static boolean isPerfectSquare(int num) {
+        int sqrt = (int) Math.sqrt(num);
+        return sqrt * sqrt == num;
+    }
+
+    // Check if a number is a Harshad number (divisible by the sum of its digits)
+    public static boolean isHarshad(int num) {
+        int sumOfDigits = 0, originalNum = num;
+        while (num != 0) {
+            sumOfDigits += num % 10;
+            num /= 10;
+        }
+        return originalNum % sumOfDigits == 0;
+    }
+
+    // Check if a number is a Strong number
+    public static boolean isStrong(int num) {
+        int originalNum = num, sum = 0;
+        while (num != 0) {
+            int digit = num % 10;
+            sum += factorial(digit);
+            num /= 10;
+        }
+        return sum == originalNum;
+    }
+
+    // Helper function to calculate factorial
+    public static int factorial(int num) 
+{int fact = 1;
+        for (int i = 1; i <= num; i++) {
+            fact *= i;
+        }
+        return fact;
+    }
+
+    // Check if a number is a Triangular number
+    public static boolean isTriangular(int num) {
+        int x = (int) Math.sqrt(2 * num);
+        return x * (x + 1) / 2 == num;
+    }
+
+    // Check if a number is a Decagonal number
+    public static boolean isDecagonal(int num) {
+        int x = (int) Math.sqrt(2 * num);
+        return x * (3 * x - 1) / 2 == num;
+    }
+
+    // Check if a number is a Palindromic square number
+    public static boolean isPalindromicSquare(int num) {
+        int square = num * num;
+        return isPalindrome(square);
+    }
+
+    // Check if a number is a Kaprekar number
+    public static boolean isKaprekar(int num) {
+        int square = num * num;
+        int numDigits = (int) Math.log10(num) + 1;
+        int rightPart = square % (int) Math.pow(10, numDigits);
+        int leftPart = square / (int) Math.pow(10, numDigits);
+        return leftPart + rightPart == num;
+    }
+
+    // Check if a number is a Smith number (composite number whose sum of digits equals sum of digits of its prime factors)
+    public static boolean isSmith(int num) {
+        if (num < 2) return false;
+        int digitSum = sumOfDigits(num);
+        int primeFactorSum = sumOfPrimeFactorDigits(num);
+        return digitSum == primeFactorSum;
+    }
+
+    // Helper function to sum digits of a number
+    public static int sumOfDigits(int num) {
+        int sum = 0;
+        while (num != 0) {
+            sum += num % 10;
+            num /= 10;
+        }
+        return sum;
+    }
+
+    // Helper function to sum digits of prime factors
+    public static int sumOfPrimeFactorDigits(int num) {
+        int sum = 0;
+        for (int i = 2; i <= num; i++) {
+            while (num % i == 0) {
+                sum += sumOfDigits(i);
+                num /= i;
+            }
+        }
+        return sum;
+    }
+}
